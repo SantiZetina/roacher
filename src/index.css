@@ -1,0 +1,43 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Space Grotesk', system-ui, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+  /* Dark editorial palette — the site is dark-only. */
+  --color-ink: #0a0a0b; /* page background */
+  --color-coal: #131315; /* raised surfaces, image placeholders */
+  --color-paper: #f2f0ea; /* primary text, warm off-white */
+  --color-ash: #9b978e; /* secondary text */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink);
+}
+
+::selection {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Infinite marquee: the track holds two identical groups, so shifting by
+   half its width (plus one 2.5rem gap) loops seamlessly. */
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-50% - 1.25rem));
+  }
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
