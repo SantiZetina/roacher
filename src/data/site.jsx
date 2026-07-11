@@ -2,11 +2,11 @@
 // it only needs to read/write this data (or a JSON version of it) —
 // the components render whatever is in these arrays.
 
-// Placeholder identity — swap these values when the site gets its real owner.
+// Real identity except the email — swap that in when Rodrigo provides one.
 export const site = {
-  name: 'Roacher',
-  photographer: 'User',
-  tagline: 'Photography',
+  name: 'Rodrigo Suarez',
+  photographer: 'Rodrigo Suarez',
+  tagline: 'Photography · Mexico City',
   email: 'user@email.com',
 }
 

@@ -1,6 +1,9 @@
-import { aboutPortrait, site } from '../data/site.jsx'
+import { site } from '../data/site.jsx'
+import usePhotos from '../hooks/usePhotos.js'
 
 export default function About() {
+  const { aboutPortrait } = usePhotos()
+
   return (
     <section id="about" className="relative scroll-mt-20">
       <div className="mx-auto max-w-7xl lg:flex lg:justify-between lg:px-8 xl:justify-end">
@@ -9,7 +12,7 @@ export default function About() {
             <img
               alt={aboutPortrait.alt}
               src={aboutPortrait.src}
-              className="absolute inset-0 size-full bg-coal object-cover grayscale transition duration-700 ease-out group-hover:grayscale-0"
+              className="absolute inset-0 size-full bg-coal object-cover transition duration-700 ease-out pointer-fine:grayscale pointer-fine:group-hover:grayscale-0"
             />
           </div>
         </div>
@@ -20,8 +23,8 @@ export default function About() {
               Behind <span className="italic">the camera</span>
             </h2>
             <p className="mt-8 text-lg/8 font-light text-ash">
-              I&apos;m {site.photographer}, a photographer drawn to the quiet in-between moments — early light on a
-              hillside, an empty street before the city wakes, a face caught off guard.
+              I&apos;m {site.photographer}, a photographer based in Mexico City, drawn to the quiet in-between moments
+              — early light on a hillside, an empty street before the city wakes, a face caught off guard.
             </p>
             <p className="mt-6 text-base/7 font-light text-ash">
               My work favors natural light and patience over setups and staging. Most of what you see here was shot on

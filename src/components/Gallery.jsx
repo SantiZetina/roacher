@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { galleryPhotos } from '../data/site.jsx'
+import usePhotos from '../hooks/usePhotos.js'
 
 const MagnifyPhoto = lazy(() => import('./MagnifyPhoto.jsx'))
 
@@ -15,6 +15,7 @@ const placements = [
 ]
 
 export default function Gallery() {
+  const { galleryPhotos } = usePhotos()
   const [feature, ...rest] = galleryPhotos
 
   return (
@@ -33,7 +34,7 @@ export default function Gallery() {
             <img
               alt={feature.title}
               src={feature.src}
-              className="absolute inset-0 h-full w-full object-cover grayscale"
+              className="absolute inset-0 h-full w-full object-cover pointer-fine:grayscale"
             />
             <Suspense fallback={null}>
               <MagnifyPhoto src={feature.src} className="absolute inset-0 h-full w-full" />
@@ -61,7 +62,7 @@ export default function Gallery() {
                   <img
                     alt={photo.title}
                     src={photo.src}
-                    className={`${placement.aspect} w-full bg-coal object-cover grayscale transition-all duration-700 ease-out group-hover:scale-[1.03] group-hover:grayscale-0`}
+                    className={`${placement.aspect} w-full bg-coal object-cover transition-all duration-700 ease-out group-hover:scale-[1.03] pointer-fine:grayscale pointer-fine:group-hover:grayscale-0`}
                   />
                   <div className="pointer-events-none absolute inset-0 ring-1 ring-white/10 ring-inset" />
                 </div>

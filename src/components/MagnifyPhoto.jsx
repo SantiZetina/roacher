@@ -7,8 +7,11 @@ import useMediaQuery from '../hooks/useMediaQuery.js'
 // plain <img> underneath.
 export default function MagnifyPhoto({ src, className }) {
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  // The lens follows the cursor, so on touch devices it just sits in the
+  // middle of the frame — skip the shader entirely there.
+  const finePointer = useMediaQuery('(hover: hover) and (pointer: fine)')
 
-  if (typeof navigator === 'undefined' || !navigator.gpu) return null
+  if (typeof navigator === 'undefined' || !navigator.gpu || !finePointer) return null
 
   return (
     <Shader aria-hidden="true" className={className}>

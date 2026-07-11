@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="overflow-hidden border-t border-white/10">
       <p
         aria-hidden="true"
-        className="-mb-[0.16em] text-center font-display text-[19vw] leading-none font-light text-white/4 italic select-none"
+        className="-mb-[0.16em] text-center font-display text-[12vw] leading-none font-light whitespace-nowrap text-white/4 italic select-none"
       >
         {site.name}
       </p>

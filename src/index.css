@@ -24,8 +24,9 @@ body {
   color: var(--color-ink);
 }
 
-/* Infinite marquee: the track holds two identical groups, so shifting by
-   half its width (plus one 2.5rem gap) loops seamlessly. */
+/* Infinite marquee: the track holds four identical groups, so shifting by
+   half its width (plus one 1.25rem half-gap) lands exactly two groups over —
+   identical content, seamless loop. */
 @keyframes marquee {
   to {
     transform: translateX(calc(-50% - 1.25rem));
@@ -33,7 +34,7 @@ body {
 }
 
 .marquee-track {
-  animation: marquee 40s linear infinite;
+  animation: marquee 80s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

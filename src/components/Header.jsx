@@ -1,7 +1,24 @@
-import { useState } from 'react'
+import { lazy, Suspense, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigation, site } from '../data/site.jsx'
+
+const GlassMark = lazy(() => import('./GlassMark.jsx'))
+
+// Glass disc beside the email: a CSS green-glow fallback with the shader
+// mark layered on top once it loads (or never, without WebGPU).
+function EmailMark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="relative size-5 shrink-0 overflow-hidden rounded-full bg-[radial-gradient(circle_at_35%_30%,#54fd64_0%,#0f2e14_55%,#0a0a0a_100%)] ring-1 ring-white/15 ring-inset"
+    >
+      <Suspense fallback={null}>
+        <GlassMark className="absolute inset-0 h-full w-full" />
+      </Suspense>
+    </span>
+  )
+}
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -35,7 +52,8 @@ export default function Header() {
             </a>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:gap-x-3">
+          <EmailMark />
           <a
             href={`mailto:${site.email}`}
             className="text-xs font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-paper"
@@ -74,8 +92,9 @@ export default function Header() {
               ))}
               <a
                 href={`mailto:${site.email}`}
-                className="-mx-3 block px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"
+                className="-mx-3 flex items-center gap-x-3 px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"
               >
+                <EmailMark />
                 {site.email}
               </a>
             </div>

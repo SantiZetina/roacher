@@ -35,7 +35,7 @@ export default function IridescentAmbient() {
         mode="custom"
         rimWidth={0.22}
         scale={0.8}
-        shapeSdfUrl="https://data.shaders.com/storage/v1/object/public/user-uploaded-images/user_33nh0FG48zZa0rIUZuK7vgwPfZe/dJE9-sr_ndcl_sdf.bin"
+        shapeSdfUrl="/sdf/contact-ambient_sdf.bin"
         speed={reducedMotion ? 0 : 0.23}
         thickness={1}
       />

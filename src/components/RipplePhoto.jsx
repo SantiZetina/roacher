@@ -1,4 +1,4 @@
-import { Shader, CursorRipples, FilmGrain, Grayscale, ImageTexture, RadialGradient } from 'shaders/react'
+import { Shader, CursorRipples, FilmGrain, ImageTexture, RadialGradient, Saturation } from 'shaders/react'
 import useMediaQuery from '../hooks/useMediaQuery.js'
 
 // The featured portrait, alive: a warm film-style light leak breathes across
@@ -12,7 +12,9 @@ export default function RipplePhoto({ src, alt, className }) {
   return (
     <Shader className={className} role="img" aria-label={alt}>
       <ImageTexture url={src} objectFit="cover" />
-      <Grayscale />
+      {/* Muted color instead of full B&W — keeps the editorial mood but lets
+          the photo's palette breathe. 1 is unchanged, 0 is grayscale. */}
+      <Saturation intensity={0.65} />
       <RadialGradient
         colorA="#5f5648"
         colorB="#000000"

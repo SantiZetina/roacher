@@ -4,7 +4,9 @@ export default function Marquee() {
   return (
     <div aria-hidden="true" className="overflow-hidden border-y border-white/10 py-6">
       <div className="marquee-track flex w-max gap-x-10">
-        {[0, 1].map((group) => (
+        {/* Four copies so the track always overflows the viewport — with only
+            two, wide screens ran out of words before the animation wrapped. */}
+        {[0, 1, 2, 3].map((group) => (
           <div key={group} className="flex gap-x-10">
             {words.map((word, index) => (
               <span

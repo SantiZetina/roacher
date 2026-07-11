@@ -1,13 +1,12 @@
 import { lazy, Suspense } from 'react'
-import { heroFeature, site } from '../data/site.jsx'
+import { site } from '../data/site.jsx'
+import usePhotos from '../hooks/usePhotos.js'
 
 const RipplePhoto = lazy(() => import('./RipplePhoto.jsx'))
 
-const featureImg = (
-  <img src={heroFeature.src} alt={heroFeature.alt} className="absolute inset-0 h-full w-full object-cover grayscale" />
-)
-
 export default function Hero() {
+  const { heroFeature } = usePhotos()
+
   return (
     <section className="relative isolate overflow-hidden">
       <div
@@ -45,7 +44,11 @@ export default function Hero() {
             <div className="relative aspect-4/5 w-full overflow-hidden bg-coal">
               {/* Always present under the canvas — the visible photo whenever
                   the shader can't render (no WebGPU, adapter failure). */}
-              {featureImg}
+              <img
+                src={heroFeature.src}
+                alt={heroFeature.alt}
+                className="absolute inset-0 h-full w-full object-cover saturate-[.65]"
+              />
               <Suspense fallback={null}>
                 <RipplePhoto src={heroFeature.src} alt="" className="absolute inset-0 h-full w-full" />
               </Suspense>
