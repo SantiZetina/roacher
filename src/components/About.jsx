@@ -1,4 +1,3 @@
-import { site } from '../data/site.jsx'
 import usePhotos from '../hooks/usePhotos.js'
 
 export default function About() {
@@ -23,13 +22,13 @@ export default function About() {
               Behind <span className="italic">the camera</span>
             </h2>
             <p className="mt-8 text-lg/8 font-light text-ash">
-              I&apos;m {site.photographer}, a photographer based in Mexico City, drawn to the quiet in-between moments
-              — early light on a hillside, an empty street before the city wakes, a face caught off guard.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
             </p>
             <p className="mt-6 text-base/7 font-light text-ash">
-              My work favors natural light and patience over setups and staging. Most of what you see here was shot on
-              long walks with a single camera and a single lens, then edited just enough to match what the moment felt
-              like. Prints and commissions are available — reach out if something resonates.
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+              laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.
             </p>
             <div className="mt-10">
               <a

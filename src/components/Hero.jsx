@@ -25,8 +25,8 @@ export default function Hero() {
         <div className="mt-16 flex flex-col gap-y-16 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-sm">
             <p className="text-lg/8 font-light text-pretty text-ash">
-              A collection of landscapes, portraits, and city studies. Shot slowly, edited lightly, and printed the way
-              they were seen.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
             </p>
             <div className="mt-10">
               <a

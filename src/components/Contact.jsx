@@ -21,8 +21,8 @@ export default function Contact() {
             Prints, commissions, and <span className="italic">collaborations</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg/8 font-light text-pretty text-ash">
-            If a photograph caught your eye or you have a project in mind, send a note. I usually reply within a day or
-            two.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua ut enim ad minim veniam.
           </p>
           <div className="mt-10 flex items-center justify-center">
             <a

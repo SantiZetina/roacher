@@ -2,10 +2,12 @@
 // it only needs to read/write this data (or a JSON version of it) —
 // the components render whatever is in these arrays.
 
-// Real identity except the email — swap that in when Rodrigo provides one.
+// Front-facing name is a placeholder until launch — the real identity still
+// lives in the SEO tags (index.html). Swap these back to the real name, plus
+// the email, when the site is ready to go live.
 export const site = {
-  name: 'Rodrigo Suarez',
-  photographer: 'Rodrigo Suarez',
+  name: 'User',
+  photographer: 'User',
   tagline: 'Photography · Mexico City',
   email: 'user@email.com',
 }
