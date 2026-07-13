@@ -13,14 +13,14 @@ export default function PhotosProvider({ children }) {
       .order('sort_order')
       .then(({ data, error }) => {
         if (error || !data?.length) return
-        const hero = data.find((p) => p.slot === 'hero')
+        const wall = data.filter((p) => p.slot === 'wall')
         const about = data.find((p) => p.slot === 'about')
         const gallery = data.filter((p) => p.slot === 'gallery')
         setValue({
-          heroFeature: hero ? { src: hero.src, alt: hero.title, caption: hero.title } : fallbackPhotos.heroFeature,
+          heroWall: wall.length ? wall.map((p) => ({ src: p.src, alt: p.title })) : fallbackPhotos.heroWall,
           aboutPortrait: about ? { src: about.src, alt: about.title } : fallbackPhotos.aboutPortrait,
           galleryPhotos: gallery.length
-            ? gallery.map((p) => ({ src: p.src, title: p.title, category: p.category, span: p.span }))
+            ? gallery.map((p) => ({ src: p.src, title: p.title, category: p.category }))
             : fallbackPhotos.galleryPhotos,
         })
       })

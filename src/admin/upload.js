@@ -1,14 +1,16 @@
 import { supabase } from '../lib/supabase.js'
 
 // Photos are resized in the browser before upload so originals straight off
-// a camera (10MB+) never hit storage or visitors. 2400px covers the
-// full-bleed panorama on large screens.
-const MAX_DIMENSION = 2400
+// a camera (10MB+) never hit storage or visitors. Sizes differ per slot to
+// protect the free-tier egress budget: wall tiles render ~350px wide (and
+// there are 16 of them per visit), while gallery photos open full-screen in
+// the lightbox and need the full 2400px.
+const MAX_DIMENSIONS = { wall: 900, about: 1600, gallery: 2400 }
 const JPEG_QUALITY = 0.85
 
-async function resizeToBlob(file) {
+async function resizeToBlob(file, maxDimension) {
   const bitmap = await createImageBitmap(file)
-  const scale = Math.min(1, MAX_DIMENSION / Math.max(bitmap.width, bitmap.height))
+  const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height))
   const width = Math.round(bitmap.width * scale)
   const height = Math.round(bitmap.height * scale)
   const canvas = document.createElement('canvas')
@@ -23,7 +25,7 @@ async function resizeToBlob(file) {
 
 // Uploads a photo and returns its public URL.
 export async function uploadPhoto(file, slot) {
-  const blob = await resizeToBlob(file)
+  const blob = await resizeToBlob(file, MAX_DIMENSIONS[slot] ?? 2400)
   const path = `${slot}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`
   const { error } = await supabase.storage.from('photos').upload(path, blob, { contentType: 'image/jpeg' })
   if (error) throw error

@@ -2,7 +2,7 @@ const words = ['Landscapes', 'Portraits', 'City studies', 'Prints', 'Commissions
 
 export default function Marquee() {
   return (
-    <div aria-hidden="true" className="overflow-hidden border-y border-white/10 py-6">
+    <div aria-hidden="true" className="overflow-hidden border-y border-white/10 py-8 sm:py-10">
       <div className="marquee-track flex w-max gap-x-10">
         {/* Four copies so the track always overflows the viewport — with only
             two, wide screens ran out of words before the animation wrapped. */}
@@ -11,7 +11,7 @@ export default function Marquee() {
             {words.map((word, index) => (
               <span
                 key={word}
-                className="flex items-center gap-x-10 font-display text-2xl font-light whitespace-nowrap text-ash"
+                className="flex items-center gap-x-10 font-display text-3xl font-light whitespace-nowrap text-ash sm:text-4xl"
               >
                 <span className={index % 2 ? 'italic' : ''}>{word}</span>
                 <span className="text-white/20">·</span>

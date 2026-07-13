@@ -18,16 +18,11 @@ export const navigation = [
   { name: 'Contact', href: '#contact' },
 ]
 
-// The single featured hero photo, rendered through the glass shader.
-// Served locally: the shader's ImageTexture can't load cross-origin URLs.
-export const heroFeature = {
-  src: '/photos/hero-portrait.jpg',
-  alt: 'Portrait in natural light',
-  caption: 'Portrait in natural light',
-}
-
-// Images shown in the hero collage (portrait orientation works best).
-export const heroImages = [
+// Fallback photos for the hero wall, shown until Rodrigo uploads his own
+// through the admin panel (slot 'wall'). The Hero cycles whatever it gets to
+// fill all 16 tiles, so any count works — portrait orientation looks best.
+export const heroWall = [
+  { src: '/photos/hero-portrait.jpg', alt: 'Portrait in natural light' },
   {
     src: 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=400&h=600&q=80',
     alt: 'Mountain lake at dusk',
@@ -40,6 +35,7 @@ export const heroImages = [
     src: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&h=600&q=80',
     alt: 'Portrait in natural light',
   },
+  { src: '/photos/canopy.jpg', alt: 'Forest canopy' },
   {
     src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=400&h=600&q=80',
     alt: 'City street from above',
@@ -50,8 +46,9 @@ export const heroImages = [
   },
 ]
 
-// Gallery photos. `span` controls the bento layout: 'wide' takes 2/3
-// of a row, 'narrow' takes 1/3. Alternate them for a balanced grid.
+// Gallery photos. The mosaic fills a repeating pattern in order: one big
+// feature square, four small squares, one full-width panorama — so photos
+// 1, 7, 13… get the feature frame and 6, 12, 18… the panorama.
 export const galleryPhotos = [
   {
     // Served locally: this one renders inside the shader pipeline (godrays),

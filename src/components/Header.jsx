@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { navigation, site } from '../data/site.jsx'
@@ -22,9 +22,23 @@ function EmailMark() {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  // Transparent while the photo-wall hero is behind it; gains the ink blur
+  // and border once the page scrolls.
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-ink/80 backdrop-blur-md">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+        scrolled ? 'border-white/10 bg-ink/80 backdrop-blur-md' : 'border-transparent bg-transparent'
+      }`}
+    >
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5 font-display text-xl font-medium text-paper italic">

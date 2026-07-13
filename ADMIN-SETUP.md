@@ -17,6 +17,10 @@ himself. Nothing here requires the custom domain.
    This creates the photo list, the image storage, and the access rules
    (everyone can view, only a signed-in user can change).
 
+> **Already ran the script before the photo-wall redesign?** Don't re-run it —
+> just run the two `alter table` lines in the MIGRATION comment at the bottom
+> of `supabase-setup.sql`, so the database accepts hero-wall photos.
+
 ## 3. Create Rodrigo's login
 
 1. **Authentication → Users → Add user → Create new user**.
@@ -52,10 +56,11 @@ himself. Nothing here requires the custom domain.
 - Supabase free tier limits (1 GB storage, 5 GB bandwidth/month) are plenty
   for a portfolio. If he ever hits them, the fix is a $25/month plan, not code.
 
-## If the hero photo doesn't render inside the shader
+## If the magnifier doesn't appear on the first gallery photo
 
-The hero portrait renders through WebGPU, which is picky about images from
-another domain. Supabase sends the right headers so it should just work — but
-if the hero ever shows the plain photo without the ripple effect after
-switching to an uploaded photo, tell Claude "proxy the Supabase images" and
-it'll route them through the site's own domain via a Vercel rewrite.
+The big first gallery photo renders through WebGPU (a glass magnifier follows
+the cursor on desktop), which is picky about images from another domain.
+Supabase sends the right headers so it should just work — but if that photo
+ever shows plain, with no magnifier on desktop, after switching to an uploaded
+photo, tell Claude "proxy the Supabase images" and it'll route them through
+the site's own domain via a Vercel rewrite.

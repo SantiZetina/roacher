@@ -4,13 +4,14 @@
 -- "already exists" errors, which are safe to ignore.
 
 -- The photo list. `slot` says where the photo appears:
---   hero    = the big shader portrait at the top (one photo)
+--   wall    = the hero photo wall at the top (any number, ordered)
 --   about   = the About section portrait (one photo)
---   gallery = the Selected Work grid (any number, ordered by sort_order;
---             the first one is the wide panorama frame)
+--   gallery = the Selected Work mosaic (any number, ordered by sort_order;
+--             it repeats every 6: big square, 4 squares, panorama)
+--   hero    = legacy slot from the old design; no longer displayed
 create table public.photos (
   id uuid primary key default gen_random_uuid(),
-  slot text not null default 'gallery' check (slot in ('hero', 'about', 'gallery')),
+  slot text not null default 'gallery' check (slot in ('hero', 'about', 'gallery', 'wall')),
   src text not null,
   title text not null default '',
   category text not null default '',
@@ -44,3 +45,13 @@ create policy "authenticated update photos bucket" on storage.objects
 
 create policy "authenticated delete photos bucket" on storage.objects
   for delete to authenticated using (bucket_id = 'photos');
+
+-- ============================================================
+-- MIGRATION for a database created before the 'wall' slot existed
+-- (the photo-wall redesign). If you already ran the setup above,
+-- run ONLY these two lines to allow wall photos:
+--
+-- alter table public.photos drop constraint photos_slot_check;
+-- alter table public.photos add constraint photos_slot_check
+--   check (slot in ('hero', 'about', 'gallery', 'wall'));
+-- ============================================================

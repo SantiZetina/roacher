@@ -1,16 +1,29 @@
 import { lazy, Suspense } from 'react'
 import { site } from '../data/site.jsx'
+import usePhotos from '../hooks/usePhotos.js'
 
 const IridescentAmbient = lazy(() => import('./IridescentAmbient.jsx'))
 
 export default function Contact() {
+  // Borrow the gallery's feature photo for the backdrop — it's the strongest
+  // frame on the page and admin-managed, so this stays current on its own.
+  const { galleryPhotos } = usePhotos()
+  const backdrop = galleryPhotos[0]
+
   return (
     <section id="contact" className="relative isolate scroll-mt-20 overflow-hidden border-t border-white/10">
-      {/* Static stand-in for the shader so the section has depth even without WebGPU */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-20 bg-[radial-gradient(80%_90%_at_30%_0%,#1d1c1a_0%,#0a0a0b_75%)]"
-      />
+      {/* A dim photo backdrop echoes the hero; the iridescent shader (or the
+          gradient alone, without WebGPU) plays on top of it. */}
+      <div aria-hidden="true" className="absolute inset-0 -z-20">
+        <img
+          src={backdrop.src}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover opacity-30 grayscale"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(80%_90%_at_30%_0%,rgba(29,28,26,0.55)_0%,rgba(10,10,11,0.9)_75%)]" />
+        <div className="absolute inset-0 bg-linear-to-b from-ink via-transparent to-ink" />
+      </div>
       <Suspense fallback={null}>
         <IridescentAmbient />
       </Suspense>

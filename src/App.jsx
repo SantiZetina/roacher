@@ -16,8 +16,8 @@ export default function App() {
         <Header />
         <main>
           <Hero />
-          <Marquee />
           <Gallery />
+          <Marquee />
           <About />
           <Contact />
         </main>

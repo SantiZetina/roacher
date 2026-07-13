@@ -37,8 +37,39 @@ body {
   animation: marquee 80s linear infinite;
 }
 
+/* Hero photo wall: each column drifts a few rem vertically, alternating
+   direction, so the wall feels alive without any shader cost. Columns are
+   much taller than the viewport, so the travel never exposes an edge. */
+@keyframes wall-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-3rem);
+  }
+}
+
+@keyframes wall-down {
+  from {
+    transform: translateY(-3rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.wall-drift-up {
+  animation: wall-up 18s ease-in-out infinite alternate;
+}
+
+.wall-drift-down {
+  animation: wall-down 24s ease-in-out infinite alternate;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track {
+  .marquee-track,
+  .wall-drift-up,
+  .wall-drift-down {
     animation: none;
   }
 }

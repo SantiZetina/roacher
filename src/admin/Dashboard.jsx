@@ -13,8 +13,9 @@ export default function Dashboard() {
   const [status, setStatus] = useState('')
   const [busy, setBusy] = useState(false)
 
-  const gallery = rows.filter((r) => r.slot === 'gallery').sort((a, b) => a.sort_order - b.sort_order)
-  const hero = rows.find((r) => r.slot === 'hero')
+  const bySortOrder = (a, b) => a.sort_order - b.sort_order
+  const wall = rows.filter((r) => r.slot === 'wall').sort(bySortOrder)
+  const gallery = rows.filter((r) => r.slot === 'gallery').sort(bySortOrder)
   const about = rows.find((r) => r.slot === 'about')
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function Dashboard() {
     setBusy(true)
     const { error } = await supabase
       .from('photos')
-      .update({ title: row.title, category: row.category, span: row.span })
+      .update({ title: row.title, category: row.category })
       .eq('id', row.id)
     if (error) setStatus(`Save failed: ${error.message}`)
     else {
@@ -60,7 +61,7 @@ export default function Dashboard() {
         if (error) throw error
         await removeStoredPhoto(existingRow.src)
       } else {
-        const { error } = await supabase.from('photos').insert({ slot, src: url, title: '', category: '', span: 'narrow' })
+        const { error } = await supabase.from('photos').insert({ slot, src: url, title: '', category: '' })
         if (error) throw error
       }
       await refresh()
@@ -71,19 +72,19 @@ export default function Dashboard() {
     setBusy(false)
   }
 
-  async function addGalleryPhotos(files) {
+  // Adds photos to an ordered slot ('gallery' or 'wall'), appending at the end.
+  async function addPhotos(slot, list, files) {
     setBusy(true)
-    let nextOrder = gallery.length ? Math.max(...gallery.map((r) => r.sort_order)) + 1 : 0
+    let nextOrder = list.length ? Math.max(...list.map((r) => r.sort_order)) + 1 : 0
     for (const file of files) {
       setStatus(`Uploading ${file.name}…`)
       try {
-        const url = await uploadPhoto(file, 'gallery')
+        const url = await uploadPhoto(file, slot)
         const { error } = await supabase.from('photos').insert({
-          slot: 'gallery',
+          slot,
           src: url,
-          title: file.name.replace(/\.[^.]+$/, ''),
+          title: slot === 'gallery' ? file.name.replace(/\.[^.]+$/, '') : '',
           category: '',
-          span: 'narrow',
           sort_order: nextOrder++,
         })
         if (error) throw error
@@ -94,19 +95,19 @@ export default function Dashboard() {
       }
     }
     await refresh()
-    setStatus('Photos added. Fill in their titles and categories below.')
+    setStatus(slot === 'gallery' ? 'Photos added. Fill in their titles and categories below.' : 'Photos added to the wall.')
     setBusy(false)
   }
 
-  async function movePhoto(index, direction) {
+  async function movePhoto(list, index, direction) {
     const target = index + direction
-    if (target < 0 || target >= gallery.length) return
+    if (target < 0 || target >= list.length) return
     setBusy(true)
-    const a = gallery[index]
-    const b = gallery[target]
+    const a = list[index]
+    const b = list[target]
     const results = await Promise.all([
-      supabase.from('photos').update({ sort_order: target }).eq('id', a.id),
-      supabase.from('photos').update({ sort_order: index }).eq('id', b.id),
+      supabase.from('photos').update({ sort_order: b.sort_order }).eq('id', a.id),
+      supabase.from('photos').update({ sort_order: a.sort_order }).eq('id', b.id),
     ])
     const failed = results.find((r) => r.error)
     if (failed) setStatus(`Reorder failed: ${failed.error.message}`)
@@ -146,34 +147,54 @@ export default function Dashboard() {
       <main className="mx-auto max-w-4xl px-6">
         {status && <p className="mt-6 border border-white/10 bg-coal px-4 py-3 text-sm text-ash">{status}</p>}
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2">
-          <SlotCard
-            label="Hero portrait"
-            hint="The big photo at the top of the page. Portrait orientation works best."
-            row={hero}
-            busy={busy}
-            onReplace={(file) => replaceSlotPhoto('hero', hero, file)}
-          >
-            {hero && (
-              <div className="mt-3 flex gap-x-2">
-                <input
-                  type="text"
-                  placeholder="Caption, e.g. Portrait in natural light"
-                  value={hero.title}
-                  onChange={(e) => editRow(hero.id, { title: e.target.value })}
-                  className={inputClass}
-                />
-                {dirtyIds.has(hero.id) && (
-                  <button type="button" disabled={busy} onClick={() => saveRow(hero)} className={smallButtonClass}>
-                    Save
+        <section className="mt-10">
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-xs font-medium tracking-[0.3em] text-ash uppercase">Hero wall — top of the page</h2>
+            <AddPhotosButton busy={busy} onFiles={(files) => addPhotos('wall', wall, files)} />
+          </div>
+          <p className="mt-2 text-sm text-ash">
+            These fill the photo wall behind the headline. Tall (portrait) photos look best. Any number works — the
+            wall repeats them to fill itself — but 8 or more gives the most variety.
+          </p>
+          {wall.length === 0 && (
+            <p className="mt-6 text-sm text-ash">
+              No photos yet — the site is showing its built-in placeholders. Add photos to replace them.
+            </p>
+          )}
+          <ul className="mt-6 grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-6">
+            {wall.map((row, index) => (
+              <li key={row.id} className="border border-white/10 bg-coal/50 p-2">
+                <img src={row.src} alt="" className="aspect-3/4 w-full bg-coal object-cover" />
+                <div className="mt-2 flex items-center justify-between">
+                  <button
+                    type="button"
+                    disabled={busy || index === 0}
+                    onClick={() => movePhoto(wall, index, -1)}
+                    className={smallButtonClass}
+                  >
+                    ←
                   </button>
-                )}
-              </div>
-            )}
-          </SlotCard>
+                  <button type="button" disabled={busy} onClick={() => deletePhoto(row)} className={smallButtonClass}>
+                    ✕
+                  </button>
+                  <button
+                    type="button"
+                    disabled={busy || index === wall.length - 1}
+                    onClick={() => movePhoto(wall, index, 1)}
+                    className={smallButtonClass}
+                  >
+                    →
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <div className="mt-16 grid gap-8 sm:grid-cols-2">
           <SlotCard
             label="About portrait"
-            hint="The photo of you in the About section."
+            hint="The photo of you in the About section. It shows full-bleed behind the text, darkened on the left."
             row={about}
             busy={busy}
             onReplace={(file) => replaceSlotPhoto('about', about, file)}
@@ -183,10 +204,12 @@ export default function Dashboard() {
         <section className="mt-16">
           <div className="flex items-baseline justify-between">
             <h2 className="text-xs font-medium tracking-[0.3em] text-ash uppercase">Gallery — Selected work</h2>
-            <AddPhotosButton busy={busy} onFiles={addGalleryPhotos} />
+            <AddPhotosButton busy={busy} onFiles={(files) => addPhotos('gallery', gallery, files)} />
           </div>
           <p className="mt-2 text-sm text-ash">
-            The first photo is the big panorama frame — a wide photo looks best there. Use the arrows to reorder.
+            The mosaic fills in order and repeats every six photos: one big square, four small squares, then a wide
+            panorama. So photos 1, 7, 13… get the big frame and photos 6, 12, 18… should be wide shots. Use the arrows
+            to reorder.
           </p>
           {gallery.length === 0 && (
             <p className="mt-8 text-sm text-ash">
@@ -206,23 +229,13 @@ export default function Dashboard() {
                     onChange={(e) => editRow(row.id, { title: e.target.value })}
                     className={inputClass}
                   />
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      placeholder="Category, e.g. Portrait"
-                      value={row.category}
-                      onChange={(e) => editRow(row.id, { category: e.target.value })}
-                      className={inputClass}
-                    />
-                    <select
-                      value={row.span}
-                      onChange={(e) => editRow(row.id, { span: e.target.value })}
-                      className="border border-white/15 bg-coal px-2 py-2 text-sm text-paper outline-none focus:border-white/40"
-                    >
-                      <option value="narrow">Narrow</option>
-                      <option value="wide">Wide</option>
-                    </select>
-                  </div>
+                  <input
+                    type="text"
+                    placeholder="Category, e.g. Portrait"
+                    value={row.category}
+                    onChange={(e) => editRow(row.id, { category: e.target.value })}
+                    className={inputClass}
+                  />
                 </div>
                 <div className="flex items-center gap-x-2">
                   {dirtyIds.has(row.id) && (
@@ -230,13 +243,18 @@ export default function Dashboard() {
                       Save
                     </button>
                   )}
-                  <button type="button" disabled={busy || index === 0} onClick={() => movePhoto(index, -1)} className={smallButtonClass}>
+                  <button
+                    type="button"
+                    disabled={busy || index === 0}
+                    onClick={() => movePhoto(gallery, index, -1)}
+                    className={smallButtonClass}
+                  >
                     ↑
                   </button>
                   <button
                     type="button"
                     disabled={busy || index === gallery.length - 1}
-                    onClick={() => movePhoto(index, 1)}
+                    onClick={() => movePhoto(gallery, index, 1)}
                     className={smallButtonClass}
                   >
                     ↓
