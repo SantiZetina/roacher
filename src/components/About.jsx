@@ -21,9 +21,9 @@ export default function About() {
 
       <div className="mx-auto max-w-7xl px-6 py-32 sm:py-44 lg:px-8">
         <div className="max-w-xl">
-          <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">About</p>
+          <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">Sobre mí</p>
           <h2 className="mt-4 font-display text-4xl font-light tracking-tight text-pretty text-paper sm:text-6xl">
-            Behind <span className="italic">the camera</span>
+            Detrás <span className="italic">de la cámara</span>
           </h2>
           <p className="mt-8 text-lg/8 font-light text-pretty text-paper/70">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -39,7 +39,7 @@ export default function About() {
               href="#contact"
               className="group inline-flex items-center gap-x-3 text-xs font-medium tracking-[0.2em] text-paper uppercase"
             >
-              Get in touch
+              Contáctame
               <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
                 →
               </span>

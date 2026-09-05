@@ -2,20 +2,25 @@
 // it only needs to read/write this data (or a JSON version of it) —
 // the components render whatever is in these arrays.
 
+import { categories } from './categories.js'
+
 // Front-facing name is a placeholder until launch — the real identity still
 // lives in the SEO tags (index.html). Swap these back to the real name, plus
 // the email, when the site is ready to go live.
 export const site = {
   name: 'User',
   photographer: 'User',
-  tagline: 'Photography · Mexico City',
+  tagline: 'Fotografía · Ciudad de México',
   email: 'user@email.com',
 }
 
+// One nav entry per gallery section, so each kind of work is reachable from
+// the header without scrolling. Built from categories.js so adding a section
+// there adds it to the nav too.
 export const navigation = [
-  { name: 'Work', href: '#work' },
-  { name: 'About', href: '#about' },
-  { name: 'Contact', href: '#contact' },
+  ...categories.map((category) => ({ name: category.name, href: `#${category.slug}` })),
+  { name: 'Sobre mí', href: '#about' },
+  { name: 'Contacto', href: '#contact' },
 ]
 
 // Fallback photos for the hero wall, shown until Rodrigo uploads his own
@@ -49,43 +54,47 @@ export const heroWall = [
 // Gallery photos. The mosaic fills a repeating pattern in order: one big
 // feature square, four small squares, one full-width panorama — so photos
 // 1, 7, 13… get the feature frame and 6, 12, 18… the panorama.
+//
+// `category` must match an id in categories.js for a photo to appear under
+// a filter tab. These placeholders are spread across all three so the tabs
+// are visible (and testable) before Rodrigo uploads his own work.
 export const galleryPhotos = [
   {
     // Served locally: this one renders inside the shader pipeline (godrays),
     // and the shader's ImageTexture can't load cross-origin URLs reliably.
     src: '/photos/canopy.jpg',
-    title: 'Canopy',
-    category: 'Landscape',
+    title: 'Primera luz',
+    category: 'Sociales',
     span: 'wide',
   },
   {
     src: 'https://images.unsplash.com/photo-1494548162494-384bba4ab999?auto=format&fit=crop&w=800&h=800&q=80',
-    title: 'First light',
-    category: 'Landscape',
+    title: 'Brindis',
+    category: 'Sociales',
     span: 'narrow',
   },
   {
     src: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&h=800&q=80',
-    title: 'Glass and steel',
-    category: 'Urban',
+    title: 'Última vuelta',
+    category: 'Deportivo',
     span: 'narrow',
   },
   {
     src: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&h=800&q=80',
-    title: 'Passing storm',
-    category: 'Landscape',
+    title: 'Medio tiempo',
+    category: 'Deportivo',
     span: 'wide',
   },
   {
     src: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1200&h=800&q=80',
-    title: 'Study in shadow',
-    category: 'Portrait',
+    title: 'Estudio en sombra',
+    category: 'Retrato',
     span: 'wide',
   },
   {
     src: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&h=800&q=80',
-    title: 'Night grid',
-    category: 'Urban',
+    title: 'Contraluz',
+    category: 'Retrato',
     span: 'narrow',
   },
 ]

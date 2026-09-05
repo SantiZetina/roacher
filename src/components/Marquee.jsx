@@ -1,4 +1,4 @@
-const words = ['Landscapes', 'Portraits', 'City studies', 'Prints', 'Commissions', 'Natural light']
+const words = ['Sociales', 'Deportivo', 'Retrato', 'Bodas', 'Impresiones', 'Encargos', 'Luz natural']
 
 export default function Marquee() {
   return (

@@ -42,7 +42,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
           onClick={onClose}
           className="absolute top-4 right-4 p-2 text-paper/60 transition-colors hover:text-paper"
         >
-          <span className="sr-only">Close</span>
+          <span className="sr-only">Cerrar</span>
           <XMarkIcon aria-hidden="true" className="size-6" />
         </button>
         <button
@@ -50,7 +50,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
           onClick={() => onNavigate((index - 1 + count) % count)}
           className="absolute left-2 p-2 text-paper/60 transition-colors hover:text-paper sm:left-4"
         >
-          <span className="sr-only">Previous photo</span>
+          <span className="sr-only">Foto anterior</span>
           <ChevronLeftIcon aria-hidden="true" className="size-7" />
         </button>
         <button
@@ -58,7 +58,7 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
           onClick={() => onNavigate((index + 1) % count)}
           className="absolute right-2 p-2 text-paper/60 transition-colors hover:text-paper sm:right-4"
         >
-          <span className="sr-only">Next photo</span>
+          <span className="sr-only">Foto siguiente</span>
           <ChevronRightIcon aria-hidden="true" className="size-7" />
         </button>
       </div>

@@ -46,6 +46,37 @@ himself. Nothing here requires the custom domain.
 - Open `yoursite.com/admin` (or `localhost:5173/admin` with `npm run dev`).
 - Sign in, upload a gallery photo, check the homepage — it should appear.
 
+## Sections (Sociales / Deportivo / Retrato)
+
+The gallery is split into **separate sections** down the page — each with its
+own heading, its own grid, and its own entry in the header nav. A client who
+wants a wedding photographer can click **Sociales** and land straight on that
+work without scrolling past the sports photos.
+
+The admin mirrors this exactly: one panel per section, each with its **own
+"Agregar fotos" button**. Rodrigo picks the section by which button he presses,
+so an upload can't land uncategorised by accident. The dropdown under each
+photo is there to *move* a photo between sections afterwards.
+
+- Reordering (↑ ↓) is scoped to the section — moving a photo up in Deportivo
+  never disturbs Sociales.
+- A section with no photos doesn't render on the public site, so an empty
+  heading never appears while Rodrigo is still uploading.
+- Each section's grid repeats in sixes: one big square, four small, one wide
+  panorama. Six or more photos per section looks best; two or three renders a
+  short group.
+- The lightbox pages within one section only — opening a sports photo and
+  hitting → stays in Deportivo.
+
+To add, rename, or reorder sections, edit `src/data/categories.js` — that one
+file drives the page sections, the header nav, and the admin panels. The `id`
+is what's stored in the database: changing an `id` orphans every photo already
+filed under it. Those photos aren't lost — they collect in an **Otras** section
+on the site and a **Sin sección** panel in the admin, where they can be re-filed.
+
+**No database migration is needed for this** — sections use the `category`
+column that already existed.
+
 ## How it behaves
 
 - Photos upload into Supabase storage, resized in the browser first so phone

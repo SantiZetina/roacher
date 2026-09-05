@@ -12,7 +12,7 @@ export default function Login() {
     setBusy(true)
     setError('')
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password })
-    if (authError) setError('Wrong email or password.')
+    if (authError) setError('Correo o contraseña incorrectos.')
     setBusy(false)
   }
 
@@ -20,9 +20,9 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-ink px-6 font-sans text-paper">
       <form onSubmit={handleSubmit} className="w-full max-w-sm">
         <h1 className="font-display text-3xl font-light italic">Admin</h1>
-        <p className="mt-2 text-sm text-ash">Sign in to manage the photos on the site.</p>
+        <p className="mt-2 text-sm text-ash">Inicia sesión para administrar las fotos del sitio.</p>
         <label className="mt-8 block text-xs font-medium tracking-[0.2em] text-ash uppercase">
-          Email
+          Correo
           <input
             type="email"
             required
@@ -33,7 +33,7 @@ export default function Login() {
           />
         </label>
         <label className="mt-5 block text-xs font-medium tracking-[0.2em] text-ash uppercase">
-          Password
+          Contraseña
           <input
             type="password"
             required
@@ -49,7 +49,7 @@ export default function Login() {
           disabled={busy}
           className="mt-8 w-full bg-paper px-8 py-3 text-xs font-medium tracking-[0.2em] text-ink uppercase transition-colors hover:bg-white disabled:opacity-50"
         >
-          {busy ? 'Signing in…' : 'Sign in'}
+          {busy ? 'Entrando…' : 'Entrar'}
         </button>
       </form>
     </div>

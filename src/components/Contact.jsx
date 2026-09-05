@@ -29,9 +29,9 @@ export default function Contact() {
       </Suspense>
       <div className="px-6 py-24 sm:py-32 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium tracking-[0.3em] text-ash uppercase">Contact</p>
+          <p className="text-xs font-medium tracking-[0.3em] text-ash uppercase">Contacto</p>
           <h2 className="mt-4 font-display text-4xl font-light tracking-tight text-balance text-paper sm:text-6xl">
-            Prints, commissions, and <span className="italic">collaborations</span>
+            Impresiones, encargos y <span className="italic">colaboraciones</span>
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg/8 font-light text-pretty text-ash">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et

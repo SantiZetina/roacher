@@ -61,7 +61,7 @@ export default function Hero() {
           {site.tagline} — {site.photographer}
         </p>
         <h1 className="mt-8 font-display text-6xl leading-[1.02] font-light tracking-tight text-balance text-paper sm:text-8xl lg:text-9xl">
-          Quiet moments, <span className="italic">carefully framed.</span>
+          Momentos tranquilos, <span className="italic">bien encuadrados.</span>
         </h1>
         <p className="mt-8 max-w-md text-lg/8 font-light text-pretty text-paper/70">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -72,13 +72,13 @@ export default function Hero() {
             href="#work"
             className="border border-paper/25 px-6 py-3 text-xs font-medium tracking-[0.2em] text-paper uppercase transition-colors hover:border-paper/60"
           >
-            View the work
+            Ver el trabajo
           </a>
           <a
             href="#contact"
             className="group inline-flex items-center gap-x-3 text-xs font-medium tracking-[0.2em] text-paper/70 uppercase transition-colors hover:text-paper"
           >
-            Get in touch
+            Contáctame
             <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
               →
             </span>
@@ -90,7 +90,7 @@ export default function Hero() {
         aria-hidden="true"
         className="absolute inset-x-0 bottom-6 text-center text-xs font-medium tracking-[0.3em] text-paper/40 uppercase"
       >
-        Scroll ↓
+        Desliza ↓
       </p>
     </section>
   )
