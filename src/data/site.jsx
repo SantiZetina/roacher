@@ -4,12 +4,13 @@
 
 import { categories } from './categories.js'
 
-// Front-facing name is a placeholder until launch — the real identity still
-// lives in the SEO tags (index.html). Swap these back to the real name, plus
-// the email, when the site is ready to go live.
+// `name` is the full byline (footer copyright, SEO). `shortName` is the
+// display-size version — the footer watermark sets it at 12vw on one line, so
+// a full name would overflow on narrow screens. The email is still a
+// placeholder: swap it when Rodrigo sends the real one.
 export const site = {
-  name: 'User',
-  photographer: 'User',
+  name: 'Rodrigo Suárez',
+  shortName: 'Rodrigo',
   tagline: 'Fotografía · Ciudad de México',
   email: 'user@email.com',
 }

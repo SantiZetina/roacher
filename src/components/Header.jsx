@@ -23,11 +23,9 @@ export default function Header() {
       }`}
     >
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-        <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5 font-display text-xl font-medium text-paper italic">
-            {site.name}
-          </a>
-        </div>
+        {/* Deliberately empty: no wordmark up here — the hero states the name.
+            The spacer keeps the nav links centred against the email on the right. */}
+        <div className="flex lg:flex-1" />
         <div className="flex lg:hidden">
           <button
             type="button"
@@ -61,10 +59,7 @@ export default function Header() {
       <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
         <div className="fixed inset-0 z-50" />
         <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-ink p-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5 font-display text-xl font-medium text-paper italic">
-              {site.name}
-            </a>
+          <div className="flex items-center justify-end">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}

@@ -7,7 +7,7 @@ export default function Footer() {
         aria-hidden="true"
         className="-mb-[0.16em] text-center font-display text-[12vw] leading-none font-light whitespace-nowrap text-white/4 italic select-none"
       >
-        {site.name}
+        {site.shortName}
       </p>
       <div className="mx-auto max-w-7xl border-t border-white/5 px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
@@ -19,7 +19,7 @@ export default function Footer() {
           ))}
         </div>
         <p className="mt-8 text-center text-xs font-medium tracking-[0.2em] text-ash uppercase md:order-1 md:mt-0">
-          &copy; {new Date().getFullYear()} {site.name} — {site.photographer}
+          &copy; {new Date().getFullYear()} {site.name} — {site.tagline}
         </p>
       </div>
     </footer>

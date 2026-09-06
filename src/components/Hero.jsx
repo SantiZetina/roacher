@@ -57,15 +57,14 @@ export default function Hero() {
       </div>
 
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center px-6 py-28 text-center sm:py-36">
-        <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">
-          {site.tagline} — {site.photographer}
-        </p>
+        <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">{site.tagline}</p>
+        {/* The name is the headline — the header no longer carries a wordmark,
+            so this is the only place the identity is stated up top. */}
         <h1 className="mt-8 font-display text-6xl leading-[1.02] font-light tracking-tight text-balance text-paper sm:text-8xl lg:text-9xl">
-          Momentos tranquilos, <span className="italic">bien encuadrados.</span>
+          Rodrigo <span className="italic">Suárez</span>
         </h1>
         <p className="mt-8 max-w-md text-lg/8 font-light text-pretty text-paper/70">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua.
+          Sociales, deportivo y retrato. Ciudad de México y donde haga falta.
         </p>
         <div className="mt-12 flex items-center gap-x-8">
           <a
