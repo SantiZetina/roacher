@@ -1,20 +1,14 @@
-import { lazy, Suspense, useState } from 'react'
+import { useState } from 'react'
 import Lightbox from './Lightbox.jsx'
 
-const MagnifyPhoto = lazy(() => import('./MagnifyPhoto.jsx'))
-
-// Caption overlaid on the photo itself — the mosaic reads as one wall of
-// images, so the labels live inside the frames instead of under them.
-function Caption({ number, title, category }) {
+// Title only, overlaid on the photo. With a mouse it fades in on hover so
+// the wall reads as pure images; touch screens have no hover, so there it
+// stays visible.
+function Caption({ title }) {
+  if (!title) return null
   return (
-    <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-baseline justify-between gap-x-4 bg-linear-to-t from-ink/85 via-ink/40 to-transparent px-4 pt-16 pb-4 sm:px-5">
-      <span className="flex items-baseline gap-x-3">
-        <span aria-hidden="true" className="font-display text-lg font-light text-paper/60 italic">
-          {number}
-        </span>
-        <span className="truncate text-sm font-medium text-paper">{title}</span>
-      </span>
-      <span className="hidden text-xs font-medium tracking-[0.2em] text-paper/60 uppercase sm:block">{category}</span>
+    <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-linear-to-t from-ink/80 via-ink/30 to-transparent px-4 pt-16 pb-4 transition-opacity duration-500 sm:px-5 pointer-fine:opacity-0 pointer-fine:group-hover:opacity-100">
+      <span className="block truncate text-sm font-medium text-paper">{title}</span>
     </figcaption>
   )
 }
@@ -22,11 +16,7 @@ function Caption({ number, title, category }) {
 // One section's grid of photos, with its own lightbox. Each section on the
 // page renders its own mosaic, so indices here are local to `photos` — the
 // lightbox opened from Deportivo only ever pages through Deportivo.
-//
-// `withShader` mounts the WebGPU glass magnifier on this mosaic's feature
-// photo. Only the first section on the page passes it: one shader canvas per
-// page, not one per section, so phones aren't running three at once.
-export default function PhotoMosaic({ photos, withShader = false }) {
+export default function PhotoMosaic({ photos }) {
   const [lightboxIndex, setLightboxIndex] = useState(null)
 
   // The mosaic repeats a six-photo pattern: a big feature square, a 2x2
@@ -37,15 +27,13 @@ export default function PhotoMosaic({ photos, withShader = false }) {
     groups.push(photos.slice(i, i + 6))
   }
 
-  // The whole tile opens the lightbox via bubbling — an overlay button would
-  // sit on the magnifier canvas and starve it of pointer events. The sr-only
-  // button gives keyboard users the same entry point (its click bubbles too).
+  // The whole tile opens the lightbox via bubbling. The sr-only button gives
+  // keyboard users the same entry point (its click bubbles too).
   const tileButton = (title) => (
     <button type="button" className="sr-only">
       Ver {title} en pantalla completa
     </button>
   )
-  const number = (index) => String(index + 1).padStart(2, '0')
 
   return (
     <>
@@ -70,14 +58,9 @@ export default function PhotoMosaic({ photos, withShader = false }) {
                 <img
                   alt={feature.title}
                   src={feature.src}
-                  className="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.02] pointer-fine:grayscale pointer-fine:group-hover:grayscale-0"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                 />
-                {withShader && groupIndex === 0 && (
-                  <Suspense fallback={null}>
-                    <MagnifyPhoto src={feature.src} className="absolute inset-0 h-full w-full" />
-                  </Suspense>
-                )}
-                <Caption number={number(base)} title={feature.title} category={feature.category} />
+                <Caption title={feature.title} />
                 {tileButton(feature.title)}
               </figure>
 
@@ -92,9 +75,9 @@ export default function PhotoMosaic({ photos, withShader = false }) {
                       <img
                         alt={photo.title}
                         src={photo.src}
-                        className="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.04] pointer-fine:grayscale pointer-fine:group-hover:grayscale-0"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                       />
-                      <Caption number={number(base + index + 1)} title={photo.title} category={photo.category} />
+                      <Caption title={photo.title} />
                       {tileButton(photo.title)}
                     </figure>
                   ))}
@@ -109,9 +92,9 @@ export default function PhotoMosaic({ photos, withShader = false }) {
                   <img
                     alt={panorama.title}
                     src={panorama.src}
-                    className="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-[1.02] pointer-fine:grayscale pointer-fine:group-hover:grayscale-0"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                   />
-                  <Caption number={number(base + 5)} title={panorama.title} category={panorama.category} />
+                  <Caption title={panorama.title} />
                   {tileButton(panorama.title)}
                 </figure>
               )}

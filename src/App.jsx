@@ -1,7 +1,6 @@
 import PhotosProvider from './data/PhotosProvider.jsx'
 import Header from './components/Header.jsx'
 import Hero from './components/Hero.jsx'
-import Marquee from './components/Marquee.jsx'
 import Gallery from './components/Gallery.jsx'
 import About from './components/About.jsx'
 import Contact from './components/Contact.jsx'
@@ -17,7 +16,6 @@ export default function App() {
         <main>
           <Hero />
           <Gallery />
-          <Marquee />
           <About />
           <Contact />
         </main>

@@ -35,7 +35,7 @@ export default function Gallery() {
     // #work keeps working as an anchor for the hero's "Ver el trabajo" button:
     // it lands on the first section.
     <div id="work" className="scroll-mt-20">
-      {sections.map((section, index) => (
+      {sections.map((section) => (
         <section key={section.id} id={section.slug} className="scroll-mt-20 py-24 sm:py-28">
           <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
             <p className="text-xs font-medium tracking-[0.3em] text-ash uppercase">{section.kicker}</p>
@@ -49,9 +49,7 @@ export default function Gallery() {
           </div>
 
           <div className="mt-12">
-            {/* Only the first section gets the WebGPU magnifier — one shader
-                canvas per page keeps phones happy. */}
-            <PhotoMosaic photos={section.photos} withShader={index === 0} />
+            <PhotoMosaic photos={section.photos} />
           </div>
         </section>
       ))}

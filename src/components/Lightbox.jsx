@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
@@ -6,6 +6,25 @@ import { ChevronLeftIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/react/2
 // tiles, so this is the only place a photo shows its actual full frame.
 export default function Lightbox({ photos, index, onClose, onNavigate }) {
   const count = photos.length
+  const touchStart = useRef(null)
+
+  // Swipe left/right on phones to page through. Only single-finger touches
+  // count, so pinch-zooming a photo never flips it, and the swipe has to be
+  // clearly horizontal so a sloppy vertical drag doesn't either.
+  function handleTouchStart(event) {
+    touchStart.current =
+      event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null
+  }
+
+  function handleTouchEnd(event) {
+    const start = touchStart.current
+    touchStart.current = null
+    if (!start || count < 2) return
+    const dx = event.changedTouches[0].clientX - start.x
+    const dy = event.changedTouches[0].clientY - start.y
+    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    onNavigate(dx < 0 ? (index + 1) % count : (index - 1 + count) % count)
+  }
 
   useEffect(() => {
     if (index === null) return
@@ -23,7 +42,12 @@ export default function Lightbox({ photos, index, onClose, onNavigate }) {
   return (
     <Dialog open onClose={onClose} className="relative z-50">
       <div aria-hidden="true" className="fixed inset-0 bg-ink/95 backdrop-blur-sm" />
-      <div className="fixed inset-0 flex items-center justify-center p-4 pt-16 pb-14 sm:p-14">
+      <div
+        onTouchStart={handleTouchStart}
+        onTouchMove={(event) => event.touches.length > 1 && (touchStart.current = null)}
+        onTouchEnd={handleTouchEnd}
+        className="fixed inset-0 flex items-center justify-center p-4 pt-16 pb-14 sm:p-14"
+      >
         <DialogPanel className="flex max-h-full w-full max-w-6xl flex-col">
           <img src={photo.src} alt={photo.title} className="min-h-0 w-full flex-1 object-contain" />
           <p className="mt-4 flex items-baseline justify-between gap-x-4">

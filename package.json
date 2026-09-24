@@ -15,7 +15,7 @@
     "@supabase/supabase-js": "^2.110.2",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "shaders": "^2.5.135"
+    "shaders": "^3.2.470"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

@@ -1,48 +1,73 @@
-import { lazy, Suspense } from 'react'
-import { site } from '../data/site.jsx'
-import usePhotos from '../hooks/usePhotos.js'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import { whatsappHref } from '../data/site.jsx'
 
-const IridescentAmbient = lazy(() => import('./IridescentAmbient.jsx'))
+const VoxelShift = lazy(() => import('./VoxelShift.jsx'))
+
+// Resolves true only when the browser can actually hand out a GPU adapter —
+// `navigator.gpu` alone isn't enough (some browsers expose it and then return
+// no adapter). Until then, and on browsers without WebGPU, the shader library
+// (~700 KB gzipped) is never downloaded and the section is text-only.
+function useWebGPU() {
+  const [ready, setReady] = useState(false)
+  useEffect(() => {
+    let cancelled = false
+    navigator.gpu
+      ?.requestAdapter()
+      .then((adapter) => !cancelled && setReady(Boolean(adapter)))
+      .catch(() => {})
+    return () => {
+      cancelled = true
+    }
+  }, [])
+  return ready
+}
 
 export default function Contact() {
-  // Borrow the gallery's feature photo for the backdrop — it's the strongest
-  // frame on the page and admin-managed, so this stays current on its own.
-  const { galleryPhotos } = usePhotos()
-  const backdrop = galleryPhotos[0]
+  const withShader = useWebGPU()
 
   return (
     <section id="contact" className="relative isolate scroll-mt-20 overflow-hidden border-t border-white/10">
-      {/* A dim photo backdrop echoes the hero; the iridescent shader (or the
-          gradient alone, without WebGPU) plays on top of it. */}
-      <div aria-hidden="true" className="absolute inset-0 -z-20">
-        <img
-          src={backdrop.src}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover opacity-30 grayscale"
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(80%_90%_at_30%_0%,rgba(29,28,26,0.55)_0%,rgba(10,10,11,0.9)_75%)]" />
-        <div className="absolute inset-0 bg-linear-to-b from-ink via-transparent to-ink" />
-      </div>
-      <Suspense fallback={null}>
-        <IridescentAmbient />
-      </Suspense>
-      <div className="px-6 py-24 sm:py-32 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[radial-gradient(80%_90%_at_30%_0%,rgba(29,28,26,0.55)_0%,rgba(10,10,11,0.9)_75%)]"
+      />
+      {/* The Voxel Shift star gets its own space instead of sitting behind the
+          text — it's too bright to read over. Beside the text on desktop,
+          above it on phones. Without WebGPU it's a single centred column. */}
+      <div
+        className={`mx-auto px-6 py-24 sm:py-32 lg:px-8 ${
+          withShader ? 'grid max-w-7xl items-center gap-y-4 lg:grid-cols-2 lg:gap-x-16' : 'max-w-2xl'
+        }`}
+      >
+        {withShader && (
+          <div
+            aria-hidden="true"
+            className="relative mx-auto aspect-square w-full max-w-xs sm:max-w-sm lg:order-2 lg:max-w-none"
+          >
+            <Suspense fallback={null}>
+              <VoxelShift className="absolute inset-0 h-full w-full" />
+            </Suspense>
+          </div>
+        )}
+        <div className={`text-center ${withShader ? 'lg:text-left' : ''}`}>
           <p className="text-xs font-medium tracking-[0.3em] text-ash uppercase">Contacto</p>
           <h2 className="mt-4 font-display text-4xl font-light tracking-tight text-balance text-paper sm:text-6xl">
             Impresiones, encargos y <span className="italic">colaboraciones</span>
           </h2>
-          <p className="mx-auto mt-6 max-w-xl text-lg/8 font-light text-pretty text-ash">
+          <p
+            className={`mx-auto mt-6 max-w-xl text-lg/8 font-light text-pretty text-ash ${withShader ? 'lg:mx-0' : ''}`}
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
             dolore magna aliqua ut enim ad minim veniam.
           </p>
-          <div className="mt-10 flex items-center justify-center">
+          <div className={`mt-10 flex items-center justify-center ${withShader ? 'lg:justify-start' : ''}`}>
             <a
-              href={`mailto:${site.email}`}
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-paper px-8 py-3.5 text-xs font-medium tracking-[0.2em] text-ink uppercase transition-colors hover:bg-white"
             >
-              {site.email}
+              Escríbeme por WhatsApp
             </a>
           </div>
         </div>

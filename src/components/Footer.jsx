@@ -12,7 +12,13 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl border-t border-white/5 px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
         <div className="flex justify-center gap-x-6 md:order-2">
           {socials.map((item) => (
-            <a key={item.name} href={item.href} className="text-ash transition-colors hover:text-paper">
+            <a
+              key={item.name}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ash transition-colors hover:text-paper"
+            >
               <span className="sr-only">{item.name}</span>
               <item.icon aria-hidden="true" className="size-5" />
             </a>

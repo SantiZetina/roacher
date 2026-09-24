@@ -1,30 +1,45 @@
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { navigation, site } from '../data/site.jsx'
+import { navigation, socials, whatsappHref } from '../data/site.jsx'
+
+const WhatsAppIcon = socials.find((item) => item.name === 'WhatsApp').icon
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   // Transparent while the photo-wall hero is behind it; gains the ink blur
   // and border once the page scrolls.
   const [scrolled, setScrolled] = useState(false)
+  // Slides away while scrolling down so the photos get the whole screen, and
+  // comes back as soon as the visitor scrolls up — the usual "I want the menu"
+  // gesture. Always shown near the top of the page.
+  const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    let lastY = window.scrollY
+    const onScroll = () => {
+      const y = window.scrollY
+      setScrolled(y > 24)
+      // Ignore tiny movements so trackpad jitter doesn't make it flicker.
+      if (Math.abs(y - lastY) < 8) return
+      setHidden(y > lastY && y > 120)
+      lastY = y
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   return (
+    // focus-within keeps it on screen for keyboard users tabbing into the nav.
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,translate] duration-300 focus-within:translate-y-0 ${
         scrolled ? 'border-white/10 bg-ink/80 backdrop-blur-md' : 'border-transparent bg-transparent'
-      }`}
+      } ${hidden && !mobileMenuOpen ? '-translate-y-full' : 'translate-y-0'}`}
     >
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
         {/* Deliberately empty: no wordmark up here — the hero states the name.
-            The spacer keeps the nav links centred against the email on the right. */}
+            The spacer keeps the nav links centred against WhatsApp on the right. */}
         <div className="flex lg:flex-1" />
         <div className="flex lg:hidden">
           <button
@@ -49,10 +64,13 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end">
           <a
-            href={`mailto:${site.email}`}
-            className="text-xs font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-paper"
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-x-2 text-xs font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-paper"
           >
-            {site.email}
+            <WhatsAppIcon aria-hidden="true" className="size-4" />
+            WhatsApp
           </a>
         </div>
       </nav>
@@ -82,10 +100,13 @@ export default function Header() {
                 </a>
               ))}
               <a
-                href={`mailto:${site.email}`}
-                className="-mx-3 block px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="-mx-3 flex items-center gap-x-3 px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"
               >
-                {site.email}
+                <WhatsAppIcon aria-hidden="true" className="size-5" />
+                WhatsApp
               </a>
             </div>
           </div>
