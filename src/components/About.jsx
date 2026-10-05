@@ -5,21 +5,21 @@ export default function About() {
 
   return (
     <section id="about" className="relative isolate scroll-mt-20 overflow-hidden">
-      {/* The portrait is the section background — same move as the hero, one
-          photo instead of a wall. The left-heavy gradient keeps the text
-          column readable while the right side stays photographic. */}
-      <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <img
-          src={aboutPortrait.src}
-          alt=""
-          loading="lazy"
-          className="h-full w-full object-cover object-[70%_center] grayscale"
-        />
-        <div className="absolute inset-0 bg-linear-to-r from-ink via-ink/80 to-ink/30" />
-        <div className="absolute inset-0 bg-linear-to-b from-ink via-transparent to-ink" />
-      </div>
+      {/* The portrait gets its own column at its natural proportions instead of
+          being the section background — a cover-cropped background cut the head
+          off full-body shots. Nothing is cropped now, whatever shape Rodrigo
+          uploads; the height cap only stops a very tall photo from towering
+          over the text. On phones it sits above the text. */}
+      <div className="mx-auto grid max-w-7xl items-center gap-x-16 gap-y-12 px-6 py-24 sm:py-32 lg:grid-cols-2 lg:px-8">
+        <div className="flex justify-center lg:order-2 lg:justify-end">
+          <img
+            src={aboutPortrait.src}
+            alt={aboutPortrait.alt}
+            loading="lazy"
+            className="h-auto max-h-[70vh] w-auto max-w-full object-contain grayscale lg:max-h-[85vh]"
+          />
+        </div>
 
-      <div className="mx-auto max-w-7xl px-6 py-32 sm:py-44 lg:px-8">
         <div className="max-w-xl">
           <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">Sobre mí</p>
           <h2 className="mt-4 font-display text-4xl font-light tracking-tight text-pretty text-paper sm:text-6xl">
