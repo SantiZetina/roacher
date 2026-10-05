@@ -43,7 +43,22 @@ export default function Gallery() {
               <h2 className="font-display text-4xl font-light tracking-tight text-pretty text-paper sm:text-6xl">
                 {section.name}
               </h2>
-              <p className="text-sm text-ash">{section.blurb}</p>
+              <div className="flex flex-col gap-y-2 sm:items-end">
+                <p className="text-sm text-ash">{section.blurb}</p>
+                {section.instagram && (
+                  <a
+                    href={`https://www.instagram.com/${section.instagram}/`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-x-2 text-xs font-medium tracking-[0.2em] text-paper uppercase"
+                  >
+                    Más en @{section.instagram}
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                      →
+                    </span>
+                  </a>
+                )}
+              </div>
             </div>
             <div aria-hidden="true" className="mt-8 border-t border-white/10" />
           </div>

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { navigation, socials, whatsappHref } from '../data/site.jsx'
-
-const WhatsAppIcon = socials.find((item) => item.name === 'WhatsApp').icon
+import { contactHref, instagramIcon as InstagramIcon, navigation } from '../data/site.jsx'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -39,7 +37,7 @@ export default function Header() {
     >
       <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
         {/* Deliberately empty: no wordmark up here — the hero states the name.
-            The spacer keeps the nav links centred against WhatsApp on the right. */}
+            The spacer keeps the nav links centred against Instagram on the right. */}
         <div className="flex lg:flex-1" />
         <div className="flex lg:hidden">
           <button
@@ -64,13 +62,13 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end">
           <a
-            href={whatsappHref}
+            href={contactHref}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-x-2 text-xs font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-paper"
           >
-            <WhatsAppIcon aria-hidden="true" className="size-4" />
-            WhatsApp
+            <InstagramIcon aria-hidden="true" className="size-4" />
+            Instagram
           </a>
         </div>
       </nav>
@@ -100,13 +98,13 @@ export default function Header() {
                 </a>
               ))}
               <a
-                href={whatsappHref}
+                href={contactHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="-mx-3 flex items-center gap-x-3 px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"
               >
-                <WhatsAppIcon aria-hidden="true" className="size-5" />
-                WhatsApp
+                <InstagramIcon aria-hidden="true" className="size-5" />
+                Instagram
               </a>
             </div>
           </div>

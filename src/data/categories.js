@@ -7,7 +7,8 @@
 // `id` is what gets stored in the photos table's `category` column — keep it
 // stable, since changing one orphans every photo already filed under it.
 // `slug` is the anchor the nav links to, `name` the heading, `blurb` the line
-// under it, and `kicker` the small label above it.
+// under it, and `kicker` the small label above it. `instagram` is optional:
+// a handle dedicated to that kind of work, linked under the section heading.
 export const categories = [
   {
     id: 'Sociales',
@@ -22,6 +23,7 @@ export const categories = [
     name: 'Deportivo',
     kicker: 'Deporte',
     blurb: 'Deporte en movimiento, dentro y fuera de la cancha.',
+    instagram: 'sua_sportsphoto',
   },
   {
     id: 'Retrato',

@@ -23,16 +23,27 @@ export default function About() {
         <div className="max-w-xl">
           <p className="text-xs font-medium tracking-[0.3em] text-paper/60 uppercase">Sobre mí</p>
           <h2 className="mt-4 font-display text-4xl font-light tracking-tight text-pretty text-paper sm:text-6xl">
-            Detrás <span className="italic">de la cámara</span>
+            Rodrigo <span className="italic">Suárez</span>
           </h2>
-          <p className="mt-8 text-lg/8 font-light text-pretty text-paper/70">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+          <p className="mt-3 text-sm font-medium tracking-[0.2em] text-paper/60 uppercase">
+            Fotógrafo y productor audiovisual
+          </p>
+          <p className="mt-8 text-lg/8 font-light text-pretty text-paper/80">
+            Con más de 10 años de experiencia en el mundo de la fotografía, he convertido mi pasión por capturar
+            momentos en una forma de expresión y profesión.
           </p>
           <p className="mt-6 text-base/7 font-light text-pretty text-paper/60">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-            laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.
+            A lo largo de mi trayectoria he trabajado en diferentes áreas, como fotografía de eventos, retrato,
+            producto, deportes y proyectos comerciales, colaborando con marcas y empresas como Grupo La Comer y
+            Mercado Pago, así como en producciones para artistas como El Bogueto.
+          </p>
+          <p className="mt-6 text-base/7 font-light text-pretty text-paper/60">
+            Con el tiempo, mi trabajo ha evolucionado hacia la producción audiovisual, creación de contenido y
+            gestión de redes sociales, buscando contar historias, transmitir ideas y dar vida a cada proyecto a
+            través de imágenes y videos.
+          </p>
+          <p className="mt-8 font-display text-xl/8 font-light text-pretty text-paper italic">
+            Para mí, cada fotografía es una historia y cada proyecto una nueva oportunidad para crear.
           </p>
           <div className="mt-10">
             <a

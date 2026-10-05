@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react'
-import { whatsappHref } from '../data/site.jsx'
+import { contactHref } from '../data/site.jsx'
 
 const VoxelShift = lazy(() => import('./VoxelShift.jsx'))
 
@@ -57,17 +57,17 @@ export default function Contact() {
           <p
             className={`mx-auto mt-6 max-w-xl text-lg/8 font-light text-pretty text-ash ${withShader ? 'lg:mx-0' : ''}`}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua ut enim ad minim veniam.
+            Eventos, retrato, deporte, producto o un proyecto comercial — cada proyecto es una nueva oportunidad
+            para crear. Escríbeme y platiquemos el tuyo.
           </p>
           <div className={`mt-10 flex items-center justify-center ${withShader ? 'lg:justify-start' : ''}`}>
             <a
-              href={whatsappHref}
+              href={contactHref}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-paper px-8 py-3.5 text-xs font-medium tracking-[0.2em] text-ink uppercase transition-colors hover:bg-white"
             >
-              Escríbeme por WhatsApp
+              Escríbeme por Instagram
             </a>
           </div>
         </div>
