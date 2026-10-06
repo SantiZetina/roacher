@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { contactHref, instagramIcon as InstagramIcon, navigation } from '../data/site.jsx'
+import { instagramHref, instagramIcon as InstagramIcon, navigation } from '../data/site.jsx'
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -62,7 +62,7 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end">
           <a
-            href={contactHref}
+            href={instagramHref}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-x-2 text-xs font-medium tracking-[0.2em] text-ash uppercase transition-colors hover:text-paper"
@@ -98,7 +98,7 @@ export default function Header() {
                 </a>
               ))}
               <a
-                href={contactHref}
+                href={instagramHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="-mx-3 flex items-center gap-x-3 px-3 py-3 text-sm font-medium tracking-[0.2em] text-ash uppercase hover:bg-white/5"

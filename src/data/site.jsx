@@ -21,6 +21,9 @@ export const site = {
 // instagram.com on desktop — instead of landing on the profile grid.
 export const contactHref = `https://ig.me/m/${site.contactInstagram}`
 
+// Plain profile link for the header's Instagram button.
+export const instagramHref = `https://www.instagram.com/${site.contactInstagram}/`
+
 // One nav entry per gallery section, so each kind of work is reachable from
 // the header without scrolling. Built from categories.js so adding a section
 // there adds it to the nav too.
