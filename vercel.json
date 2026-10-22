@@ -1,3 +1,4 @@
 {
-  "rewrites": [{ "source": "/admin", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/admin", "destination": "/index.html" }],
+  "crons": [{ "path": "/api/keep-alive", "schedule": "0 12 * * *" }]
 }
